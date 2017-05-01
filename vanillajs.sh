@@ -5,6 +5,8 @@ DEFAULT_MODULE_NAME="$(basename "$(pwd)")"
 read -e -p "Module name ($DEFAULT_MODULE_NAME): " MODULE_NAME
 MODULE_NAME=${MODULE_NAME:-$DEFAULT_MODULE_NAME}
 
+read -e -p "Description: " DESCRIPTION
+
 DEFAULT_AUTHOR="$(git config user.name)"
 read -e -p "Author ($DEFAULT_AUTHOR): " AUTHOR
 AUTHOR=${AUTHOR:-$DEFAULT_AUTHOR}
@@ -35,6 +37,7 @@ EOF
 cat > package.json <<EOF
 {
 	"name": "$moduleName",
+    "description": $(DESCRIPTION=$DESCRIPTION node -e "console.log(JSON.stringify(process.env.DESCRIPTION))"),
 	"author": $(AUTHOR=$AUTHOR node -e "console.log(JSON.stringify(process.env.AUTHOR))"),
 	"license": "MIT",
 	"scripts": {
