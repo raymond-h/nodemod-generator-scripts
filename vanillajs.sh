@@ -36,7 +36,7 @@ EOF
 
 cat > package.json <<EOF
 {
-	"name": "$moduleName",
+	"name": "$MODULE_NAME",
     "description": $(DESCRIPTION=$DESCRIPTION node -e "console.log(JSON.stringify(process.env.DESCRIPTION))"),
 	"author": $(AUTHOR=$AUTHOR node -e "console.log(JSON.stringify(process.env.AUTHOR))"),
 	"license": "MIT",
