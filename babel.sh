@@ -11,6 +11,18 @@ DEFAULT_AUTHOR="$(git config user.name)"
 read -e -p "Author ($DEFAULT_AUTHOR): " AUTHOR
 AUTHOR=${AUTHOR:-$DEFAULT_AUTHOR}
 
+cat > .editorconfig <<EOF
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+EOF
+
 # Generate files and folders
 mkdir -p src/ test/
 
@@ -38,52 +50,52 @@ EOF
 
 cat > package.json <<EOF
 {
-    "name": "$MODULE_NAME",
-    "description": $(DESCRIPTION=$DESCRIPTION node -e "console.log(JSON.stringify(process.env.DESCRIPTION))"),
-    "author": $(AUTHOR=$AUTHOR node -e "console.log(JSON.stringify(process.env.AUTHOR))"),
-    "license": "MIT",
-    "ava": {
-        "require": ["babel-register"],
-        "babel": "inherit"
-    },
-    "scripts": {
-        "lint": "eslint src/ test/",
-        "test": "ava",
-        "build": "babel -d lib/ src/",
-        "watch:lint": "onchange src/ -- run-s lint",
-        "watch:test": "ava -w",
-        "watch:build": "babel -d lib/ src/ -w",
-        "watch": "onchange src/ test/ -- run-s lint test build",
-        "prepublish": "run-s lint test build"
-    }
+  "name": "$MODULE_NAME",
+  "description": $(DESCRIPTION=$DESCRIPTION node -e "console.log(JSON.stringify(process.env.DESCRIPTION))"),
+  "author": $(AUTHOR=$AUTHOR node -e "console.log(JSON.stringify(process.env.AUTHOR))"),
+  "license": "MIT",
+  "ava": {
+    "require": ["babel-register"],
+    "babel": "inherit"
+  },
+  "scripts": {
+    "lint": "eslint src/ test/",
+    "test": "ava",
+    "build": "babel -d lib/ src/",
+    "watch:lint": "onchange src/ -- run-s lint",
+    "watch:test": "ava -w",
+    "watch:build": "babel -d lib/ src/ -w",
+    "watch": "onchange src/ test/ -- run-s lint test build",
+    "prepublish": "run-s lint test build"
+  }
 }
 EOF
 
 cat > .eslintrc.json <<EOF
 {
-    "parser": "babel-eslint",
-    "env": {
-        "es6": true,
-        "node": true
-    },
-    "parserOptions": {
-        "sourceType": "module"
-    }
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  }
 }
 EOF
 
 cat > .babelrc <<EOF
 {
-    "plugins": [
-        "transform-runtime"
-    ],
-    "presets": [
-        ["env", {
-            "targets": {
-                "node": 6.10
-            }
-        }]
-    ]
+  "plugins": [
+    "transform-runtime"
+  ],
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": 6.10
+      }
+    }]
+  ]
 }
 EOF
 
@@ -113,5 +125,5 @@ EOF
 npm install --save babel-runtime
 
 npm install --save-dev eslint ava npm-run-all onchange \
-    babel-cli babel-register babel-eslint \
-    babel-preset-env babel-plugin-transform-runtime
+  babel-cli babel-register babel-eslint \
+  babel-preset-env babel-plugin-transform-runtime

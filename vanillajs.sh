@@ -11,6 +11,18 @@ DEFAULT_AUTHOR="$(git config user.name)"
 read -e -p "Author ($DEFAULT_AUTHOR): " AUTHOR
 AUTHOR=${AUTHOR:-$DEFAULT_AUTHOR}
 
+cat > .editorconfig <<EOF
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+EOF
+
 # Generate files and folders
 mkdir -p lib/ test/
 
@@ -36,32 +48,32 @@ EOF
 
 cat > package.json <<EOF
 {
-	"name": "$MODULE_NAME",
+  "name": "$MODULE_NAME",
     "description": $(DESCRIPTION=$DESCRIPTION node -e "console.log(JSON.stringify(process.env.DESCRIPTION))"),
-	"author": $(AUTHOR=$AUTHOR node -e "console.log(JSON.stringify(process.env.AUTHOR))"),
-	"license": "MIT",
-	"scripts": {
-		"lint": "eslint lib/ test/",
-		"test": "ava",
-		"watch": "ava -w",
-		"prepublish": "run-s lint test"
-	}
+  "author": $(AUTHOR=$AUTHOR node -e "console.log(JSON.stringify(process.env.AUTHOR))"),
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint lib/ test/",
+    "test": "ava",
+    "watch": "ava -w",
+    "prepublish": "run-s lint test"
+  }
 }
 EOF
 
 cat > .eslintrc.json <<EOF
 {
-	"env": {
-		"node": true
-	}
+  "env": {
+    "node": true
+  }
 }
 EOF
 
 cat > test/.eslintrc.json <<EOF
 {
-	"parserOptions": {
-		"sourceType": "module"
-	}
+  "parserOptions": {
+    "sourceType": "module"
+  }
 }
 EOF
 

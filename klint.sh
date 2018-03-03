@@ -2,15 +2,15 @@
 
 if [ "$1" != "-s" ]
 then
-	npm install --save-dev eslint-config-kellyirc
+  npm install --save-dev eslint-config-kellyirc
 fi
 
 read -r -d '' KLINT_JSON <<JSON
 {
-	"extends": "kellyirc",
-	"rules": {
-		"require-yield": "off"
-	}
+  "extends": "kellyirc",
+  "rules": {
+    "require-yield": "off"
+  }
 }
 JSON
 
