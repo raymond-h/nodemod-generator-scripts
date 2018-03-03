@@ -47,9 +47,9 @@ EOF
 echo "// The entry point of all to come..." > lib/index.js
 
 cat > test/test.js <<EOF
-import test from 'ava'
+import test from 'ava';
 
-test.todo('write a test')
+test.todo('write a test');
 EOF
 
 cat > package.json <<EOF
@@ -59,7 +59,8 @@ cat > package.json <<EOF
   "scripts": {
     "lint": "eslint --fix lib/ test/",
     "test": "ava",
-    "watch": "ava -w",
+    "watch": "run-p watch:*",
+    "watch:test": "ava -w",
     "prepublish": "run-s lint test"
   }
 }
