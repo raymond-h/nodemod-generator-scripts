@@ -9,11 +9,12 @@ read -r -d '' KLINT_JSON <<JSON
 {
   "extends": "kellyirc",
   "rules": {
-    "require-yield": "off"
+    "require-yield": "off",
+    "indent": ["error", 2]
   }
 }
 JSON
 
-jq --indent 4 ". + $KLINT_JSON" .eslintrc.json > .tmp.eslintrc.json
+jq ". + $KLINT_JSON" .eslintrc.json > .tmp.eslintrc.json
 rm .eslintrc.json
 mv .tmp.eslintrc.json .eslintrc.json
