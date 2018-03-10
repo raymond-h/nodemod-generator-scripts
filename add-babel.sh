@@ -12,8 +12,8 @@ rm -rf lib/
 mkdir -p src/
 echo "// The entry point of all to come..." > src/index.js
 
-echo "lib/" > .gitignore
-echo "src/" > .npmignore
+echo "lib/" >> .gitignore
+echo "src/" >> .npmignore
 
 jq ".scripts.build = \"babel -d lib/ src/\" | \
 	.scripts[\"watch:build\"] = \"npm run build -- --watch\"" package.json > tmp.package.json
